@@ -34,7 +34,7 @@ async function start() {
     fetchUnreadOnStart: false,
     searchFilter: ["UNSEEN"],
   });
-  
+
   const SENDERS = JSON.parse(process.env.SENDERS);
   const RECEIVERS = JSON.parse(process.env.RECEIVERS);
   mailListener.start();
@@ -48,15 +48,11 @@ async function start() {
   });
 
   mailListener.on("server:disconnected", function () {
-    console.log("imap disconnected");
-    console.log("imap restarting...");
-    start();
+    throw new Error("Imap disconnected");
   });
 
   mailListener.on("error", function (err) {
-    console.log(err);
-    console.log("imap restarting...");
-    start();
+    throw new Error(err);
   });
 
   mailListener.on("mail", function (mail, seqno, attributes) {
