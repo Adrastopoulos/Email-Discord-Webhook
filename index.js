@@ -5,7 +5,8 @@ const {
 } = require("discord.js");
 const MailListener = require("mail-listener2");
 
-require("dotenv/config");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const webhookURLs = JSON.parse(process.env.WEBHOOK_URLS);
 const webhooks = [];
