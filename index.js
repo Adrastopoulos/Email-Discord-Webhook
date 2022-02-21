@@ -3,7 +3,7 @@ const {
   MessageEmbed,
   MessageAttachment,
 } = require("discord.js");
-const MailListener = require("mail-listener2");
+const MailListener = require("mail-listener3");
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -19,22 +19,22 @@ webhookURLs.forEach((url) => {
   webhooks.push(webhook);
 });
 
-const mailListener = new MailListener({
-  username: process.env.USER,
-  password: process.env.PASSWORD,
-  host: process.env.HOST,
-  port: Number(process.env.PORT),
-  tls: true,
-  tlsOptions: {
-    rejectUnauthorized: true,
-  },
-  fetchUnreadOnStart: false,
-  searchFilter: ["UNSEEN"],
-});
-
 start();
 
 async function start() {
+  const mailListener = new MailListener({
+    username: process.env.USERNAME,
+    password: process.env.PASSWORD,
+    host: process.env.HOST,
+    port: Number(process.env.PORT),
+    tls: true,
+    tlsOptions: {
+      rejectUnauthorized: true,
+    },
+    fetchUnreadOnStart: false,
+    searchFilter: ["UNSEEN"],
+  });
+  
   const SENDERS = JSON.parse(process.env.SENDERS);
   const RECEIVERS = JSON.parse(process.env.RECEIVERS);
   mailListener.start();
